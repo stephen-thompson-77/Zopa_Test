@@ -11,6 +11,7 @@ public class ZopaApp
     	
     }
     
-    public void findLoan(String file, String amount){
+    public void requestLoan(String file, String amount){
     }
+    
 }
