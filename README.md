@@ -77,5 +77,8 @@
 * Given I have a lender A with an amount of 350, a rate of 4% and another lender B with an amount of 540, a rate of 10% and a lender C with 260 with a rate of 5%, when I enter a loan request of 500, then I am given the loan at 9.0% from lender A and C.
 * Given I have a lender A with an amount of 350, a rate of 4% and another lender B with an amount of 540, a rate of 10% and a lender C with 260 with a rate of 5%, when I enter a loan request of 1500, then I am informed that it is not possible to complete.
 
+## Notes
+
+* Heavy processing in CsvManager when validating data types
 
 	
