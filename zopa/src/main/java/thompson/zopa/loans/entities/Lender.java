@@ -9,6 +9,12 @@ public class Lender {
 	public Lender(){
 	}
 	
+	public Lender(String name, float rate, int amount){
+		this.name = name;
+		this.rate = rate;
+		this.amount = amount;
+	}
+	
 	public String getName() {
 		return name;
 	}

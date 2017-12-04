@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import thompson.zopa.loans.entities.Lender;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 
 public class CSVManagerTest {
 	
@@ -83,7 +84,7 @@ public class CSVManagerTest {
 		List<Lender> localLenders = manager.readData(validCsv);
 		Assert.assertNotEquals("The CSV file used has invalid or currpted data, please check the file and try again.", output);
 		Assert.assertNotNull(localLenders);
-		Assert.assertEquals(lenders, localLenders);
+		Assert.assertThat(localLenders, containsInAnyOrder(lenders.toArray()));
 	}
 	
 }
