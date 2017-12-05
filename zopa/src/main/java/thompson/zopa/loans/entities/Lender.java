@@ -34,4 +34,44 @@ public class Lender {
 		this.amount = amount;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + amount;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + Float.floatToIntBits(rate);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Lender other = (Lender) obj;
+		if (amount != other.amount) {
+			return false;
+		}
+		if (name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!name.equals(other.name)) {
+			return false;
+		}
+		if (Float.floatToIntBits(rate) != Float.floatToIntBits(other.rate)) {
+			return false;
+		}
+		return true;
+	}
+	
+	
+
 }

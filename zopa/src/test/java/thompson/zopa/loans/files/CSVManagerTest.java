@@ -1,17 +1,19 @@
 package thompson.zopa.loans.files;
 
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import thompson.zopa.loans.entities.Lender;
-import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 
 public class CSVManagerTest {
 	
@@ -21,6 +23,7 @@ public class CSVManagerTest {
 	private File validCsv;
 	private ByteArrayOutputStream output;
 	private List<Lender> lenders;
+	private String INVALID_CSV = "The CSV file used has invalid or currpted data, please check the file and try again.\r\n";
 	
 	@Before
 	public void setup(){
@@ -67,22 +70,27 @@ public class CSVManagerTest {
 		lenders.add(lenderE);
 	}
 	
+	@After
+	public void tearDown(){
+		System.setOut(null);
+	}
+	
 	@Test
 	public void invalidDataTest(){
 		manager.readData(invalidCsv);
-		Assert.assertEquals("The CSV file used has invalid or currpted data, please check the file and try again.", output);
+		Assert.assertEquals(INVALID_CSV, output.toString());
 	}
 	
 	@Test
 	public void invalidDataHeadersTest(){
 		manager.readData(invalidHeadersCsv);
-		Assert.assertEquals("The CSV file used has invalid or currpted data, please check the file and try again.", output);
+		Assert.assertEquals(INVALID_CSV, output.toString());
 	}
 	
 	@Test
 	public void validDataTest(){
 		List<Lender> localLenders = manager.readData(validCsv);
-		Assert.assertNotEquals("The CSV file used has invalid or currpted data, please check the file and try again.", output);
+		Assert.assertNotEquals(INVALID_CSV, output);
 		Assert.assertNotNull(localLenders);
 		Assert.assertThat(localLenders, containsInAnyOrder(lenders.toArray()));
 	}

@@ -21,8 +21,12 @@ public class CSVManager implements FileManager {
 	private String RATE_HEADER = "rate";
 	private String INVALID_CSV = "The CSV file used has invalid or currpted data, please check the file and try again.";
 	
+	public CSVManager(){
+	}
+	
 	/**
-	 * 
+	 * Pulls the data from a CSV file of lenders and parses them into POJO lenders.
+	 * @param file - the lender file to be read
 	 */
 	public List<Lender> readData(File file) {
 		List<Lender> lenders = new ArrayList<Lender>();
@@ -53,11 +57,9 @@ public class CSVManager implements FileManager {
             for(String header : headers){
             	if(header.toLowerCase().equals(NAME_HEADER)){
             		namePos = pos;
-            	}
-            	if(header.toLowerCase().equals(AVAILABLE_HEADER)){
+            	}else if(header.toLowerCase().equals(AVAILABLE_HEADER)){
             		amountPos = pos;
-            	}
-            	if(header.toLowerCase().equals(RATE_HEADER)){
+            	} else if(header.toLowerCase().equals(RATE_HEADER)){
             		ratePos = pos;
             	}
             	pos++;
@@ -70,16 +72,17 @@ public class CSVManager implements FileManager {
             names = new ArrayList<String>();
             rates = new ArrayList<Float>();
             amounts = new ArrayList<Integer>();
-            
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(splitBy);
                 names.add(values[namePos]);
                 try {
                 	rates.add(Float.parseFloat(values[ratePos]));
                 	amounts.add(Integer.parseInt(values[amountPos]));
+                	line = br.readLine();
                 } catch(NumberFormatException e){
                 	System.out.println(INVALID_CSV);
-//                	e.printStackTrace();
+                	e.printStackTrace();
+                	break;
                 }
                 lender++;
             }

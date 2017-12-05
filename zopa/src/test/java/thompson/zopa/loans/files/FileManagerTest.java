@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +22,11 @@ public class FileManagerTest {
 		
 		output = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(output));
+	}
+	
+	@After
+	public void tearDown(){
+		System.setOut(null);
 	}
 	
 	@Test

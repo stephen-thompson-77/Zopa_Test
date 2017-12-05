@@ -41,4 +41,44 @@ public class Loan {
 		}
 		return totalAmount;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((lenders == null) ? 0 : lenders.hashCode());
+		result = prime * result + totalAmount;
+		result = prime * result + Float.floatToIntBits(totalRate);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Loan other = (Loan) obj;
+		if (lenders == null) {
+			if (other.lenders != null) {
+				return false;
+			}
+		} else if (!lenders.equals(other.lenders)) {
+			return false;
+		}
+		if (totalAmount != other.totalAmount) {
+			return false;
+		}
+		if (Float.floatToIntBits(totalRate) != Float.floatToIntBits(other.totalRate)) {
+			return false;
+		}
+		return true;
+	}
+	
+	
 }
