@@ -78,7 +78,6 @@ public class CSVManager implements FileManager {
                 try {
                 	rates.add(Float.parseFloat(values[ratePos]));
                 	amounts.add(Integer.parseInt(values[amountPos]));
-                	line = br.readLine();
                 } catch(NumberFormatException e){
                 	System.out.println(INVALID_CSV);
                 	e.printStackTrace();
