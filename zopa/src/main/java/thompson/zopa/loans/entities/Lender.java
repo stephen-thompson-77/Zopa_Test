@@ -5,6 +5,7 @@ public class Lender {
 	private String name;
 	private float rate;
 	private int amount;
+	private float rating;
 	
 	public Lender(){
 	}
@@ -33,6 +34,13 @@ public class Lender {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+	
+	public float getRating(){
+		if(this.rating == 0.0f){
+			this.rating = amount / (rate * 100);
+		}
+		return this.rating;
+	}
 
 	@Override
 	public int hashCode() {
@@ -41,6 +49,7 @@ public class Lender {
 		result = prime * result + amount;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + Float.floatToIntBits(rate);
+		result = prime * result + Float.floatToIntBits(rating);
 		return result;
 	}
 
@@ -69,9 +78,14 @@ public class Lender {
 		if (Float.floatToIntBits(rate) != Float.floatToIntBits(other.rate)) {
 			return false;
 		}
+		if (Float.floatToIntBits(rating) != Float.floatToIntBits(other.rating)) {
+			return false;
+		}
 		return true;
 	}
-	
-	
 
+	@Override
+	public String toString() {
+		return "Lender [name=" + getName() + ", rate=" + getRate() + ", amount=" + getAmount() + ", rating=" + getRating() + "]";
+	}
 }

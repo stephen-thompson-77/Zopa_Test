@@ -1,5 +1,8 @@
 package thompson.zopa.loans;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +12,7 @@ import org.junit.Test;
 
 import thompson.zopa.loans.entities.Lender;
 import thompson.zopa.loans.entities.Loan;
+import thompson.zopa.loans.files.CSVManager;
 
 public class LoanManagerTest {
 	
@@ -20,10 +24,19 @@ public class LoanManagerTest {
 	private Loan invalidLoan;
 	private LoanManager loanManager;
 	private ArrayList<Lender> lenders;
+	private ByteArrayOutputStream output;
+	private String INVALID_AMOUNT = "The amount requested was not in the correct form. "
+			+ "Please check that the amount requested is a number between 100 and 15000 in intervals of 100.\r\n";
 	
 	@Before
 	public void setup(){
+		output = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(output));
+		
 		lenders = new ArrayList<Lender>();
+		
+		ClassLoader classLoader = getClass().getClassLoader();
+		loanManager = new LoanManager(new CSVManager(), new File(classLoader.getResource("TestValidCsv").getFile()));
 		
 		Lender lenderA = new Lender();
 		lenderA.setName("Bob");
@@ -140,11 +153,18 @@ public class LoanManagerTest {
 	}
 	
 	@Test
-	public void findInvalidLoan(){
+	public void findInvalidLoanTest(){
 		Loan testLoan = loanManager.findLoan("5000");
 		Assert.assertEquals(invalidLoan.getTotalRate(), testLoan.getTotalRate(), 0.0f);
 		Assert.assertEquals(invalidLoan.getTotalAmount(), testLoan.getTotalAmount());
 		Assert.assertEquals(invalidLoan.getLenders().size(), testLoan.getLenders().size());
+	}
+	
+	@Test
+	public void invalidNumberTest(){
+		Loan testLoan = loanManager.findLoan("abcd");
+		String outStr = output.toString();
+		Assert.assertEquals(INVALID_AMOUNT, output.toString());
 	}
 	
 }
